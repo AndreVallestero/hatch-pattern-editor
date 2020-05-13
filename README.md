@@ -3,13 +3,13 @@ Hatch pattern generator for drafting and design software like CAD, Photoshop, an
 
 ## Documentation
 
-- [Homepage](/README.md)
-- [Generator](/generator.html)
-- [About hash patterns](/docs/about.md)
-- [About hash patterns with dashed lines](/docs/dashed-lines-about.md)
-- [Hash patterns with dashed lines examples](/docs/dashed-lines-examples.md)
-- [About hash patterns with multiple lines](/docs/multiple-lines-about.md)
-- [Hash patterns with multiple lines examples](/docs/multiple-lines-examples.md)
+- [Homepage](README.md)
+- [Generator](generator.html)
+- [About hash patterns](docs/about.md)
+- [About hash patterns with dashed lines](docs/dashed-lines-about.md)
+- [Hash patterns with dashed lines examples](docs/dashed-lines-examples.md)
+- [About hash patterns with multiple lines](docs/multiple-lines-about.md)
+- [Hash patterns with multiple lines examples](docs/multiple-lines-examples.md)
 
 ## How is this page so small?
 - Single page html/css/js to be called in a single request
