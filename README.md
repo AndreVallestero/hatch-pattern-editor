@@ -12,7 +12,7 @@ Hatch pattern generator for drafting and design software like CAD, Photoshop, an
 - [Hash patterns with multiple lines examples](docs/multiple-lines-examples.md)
 
 ## How is this page so small?
-- HTML/CSS/JavaSciprt is merged to a single page to be called in one request and cached
+- HTML/CSS/JavaScript is merged to a single page to be called in one request and cached
 - Favicon is hand made with 3 colors and manually compressed using https://compress-or-die.com/
 - Favicon is converted to base 64 using https://www.base64-image.de/ to keep it in a single file
 - The page is compressed with https://htmlcompressor.com/compressor/ followed by https://smallseotools.com/minify-html/
