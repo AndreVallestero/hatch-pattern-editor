@@ -1,12 +1,10 @@
 # hatch-pattern-generator
 Hatch pattern generator for drafting and design software like CAD, Photoshop, and Illustrator
 
-[Link to generator](index.html)
-
 ## Documentation
 
 - [Homepage](/README.md)
-- [Generator](/index.html)
+- [Generator](/generator.html)
 - [About hash patterns](/docs/about.md)
 - [About hash patterns with dashed lines](/docs/dashed-lines-about.md)
 - [Hash patterns with dashed lines examples](/docs/dashed-lines-examples.md)
