@@ -56,11 +56,11 @@ Note: In either case, when changing the value of MaxHatch, you must enter *MaxHa
 ## Documentation
 
 
-- [Homepage](README.md)
-- [Generator](generator.html)
-- [About hash patterns](docs/about.md)
-- [About hash patterns with dashed lines](docs/dashed-lines-about.md)
-- [Hash patterns with dashed lines examples](docs/dashed-lines-examples.md)
-- [About hash patterns with multiple lines](docs/multiple-lines-about.md)
-- [Hash patterns with multiple lines examples](docs/multiple-lines-examples.md)
+- [Homepage](../README.md)
+- [Generator](../generator.html)
+- [About hash patterns](about.md)
+- [About hash patterns with dashed lines](dashed-lines-about.md)
+- [Hash patterns with dashed lines examples](dashed-lines-examples.md)
+- [About hash patterns with multiple lines](multiple-lines-about.md)
+- [Hash patterns with multiple lines examples](multiple-lines-examples.md)
 - [Source](https://knowledge.autodesk.com/support/autocad-lt/learn-explore/caas/CloudHelp/cloudhelp/2019/ENU/AutoCAD-LT/files/GUID-A6F2E6FF-1717-44B6-A476-0CA817ADD77E-htm.html)
