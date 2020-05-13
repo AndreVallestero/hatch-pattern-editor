@@ -39,7 +39,7 @@ Hatch pattern definitions follow these rules:
 - The `delta-y` value indicates the spacing between members of the family; that is, it is measured perpendicular to the lines.
 - A line is considered to be of infinite length. A dash pattern is superimposed on the line.
 
-Note: A blank line must be placed after the last hatch pattern definition in a PAT file. If a blank line is not placed after the last hatch pattern definition, the last hatch pattern definition will not be accessible when using the hatch pattern file. See "FAQ: Why can't I use my custom hatch pattern (PAT) files?" for additional conditions that could affect the use of custom hatch patterns.
+**Note:** A blank line must be placed after the last hatch pattern definition in a PAT file. If a blank line is not placed after the last hatch pattern definition, the last hatch pattern definition will not be accessible when using the hatch pattern file. See "FAQ: Why can't I use my custom hatch pattern (PAT) files?" for additional conditions that could affect the use of custom hatch patterns.
 
 The process of hatching consists of expanding each line in the pattern definition to its infinite family of parallel lines. All selected objects are checked for intersections with any of these lines; any intersections cause the hatch lines to be turned on and off as governed by the hatching style. Each family of hatch lines is generated parallel to an initial line with an absolute origin to guarantee proper alignment.
 
@@ -51,7 +51,7 @@ In AutoCAD 2007-based products and earlier, the MaxHatch environment variable wa
 - In AutoCAD LT, use SETENV and enter a valid number.
 - In non-LT products, use the AutoLISP expression `(setenv "MaxHatch" "n")` where n is a valid number.
 
-Note: In either case, when changing the value of MaxHatch, you must enter *MaxHatch* with the capitalization as shown. 
+**Note:** In either case, when changing the value of MaxHatch, you must enter *MaxHatch* with the capitalization as shown. 
 
 ## Documentation
 
