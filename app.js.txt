@@ -1,0 +1,9 @@
+/*
+-----------------+-------------------+----------------+
+list box of lines|					 |output text box |
+				 |canvas for preview |				  |
+-----------------|					 |				  |
+control panel for|					 |----------------|
+selected line 	 |					 |download pattern|
+-----------------+-------------------+----------------+
+*/
