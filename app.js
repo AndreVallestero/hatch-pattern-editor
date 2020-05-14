@@ -52,6 +52,9 @@ function draw() {
   draw first line from starting position to length
   draw delta x until starting point out of screen
   draw delta y until starting point out of screen
+
+  dashed line:
+  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash
   */
 
   const SCALE = 4;
