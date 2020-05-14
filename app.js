@@ -20,36 +20,67 @@ TODO:
 */
 'use strict';
 
+const TO_RAD = Math.PI / -180;
+
 var lines = {},
-    loaded = -1;
+    loaded = -1,
+    length = -1;
 
 function main() {
   resize();
   window.addEventListener('resize', resize);
+  let canvas = document.getElementsByTagName('canvas')[0];
+  canvas.getContext('2d').translate(0.5, 0.5);
 }
 
 function resize() {
   let canvas = document.getElementsByTagName('canvas')[0];
   canvas.width  = canvas.offsetWidth;
   canvas.height = window.innerHeight * 0.6;
+  length = canvas.width + canvas.height;
   draw();
 }
 
 function draw() {
-  console.log('draw')
   let canvas = document.getElementsByTagName('canvas')[0],
-      ctx = canvas.getContext('2d');
-  
+    ctx = canvas.getContext('2d');
   ctx.fillStyle = 'white';
-  ctx.strokeStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
-  for (const i in lines) {
-    let line = lines[i];
-    
-    ctx.moveTo(32*i, 32*i);
-    ctx.lineTo(32+32*i, 100+32*i);
+
+  /*
+  draw first line from starting position to length
+  draw delta x until starting point out of screen
+  draw delta y until starting point out of screen
+  */
+
+  const SCALE = 4;
+  for(const key in lines) {
+    let line = lines[key],
+        x_offset = Math.cos(line.ang * TO_RAD) * length,
+        y_offset = Math.sin(line.ang * TO_RAD) * length,
+        x = parseFloat(line.x) * SCALE,
+        y = parseFloat(line.y) * SCALE,
+        dx = parseFloat(line.dx) * SCALE,
+        dy = parseFloat(line.dy) * SCALE,
+        dash1 = parseFloat(line.dash1) * SCALE,
+        dash2 = parseFloat(line.dash2) * SCALE;
+
+    if(dx < SCALE && dy < SCALE) break;
+
+    for(let j = 0; j < 256; ++j) {
+      let mid_x = x + dx * j,
+          mid_y = y + dy * j,
+          start_x = mid_x - x_offset,
+          start_y = mid_y - y_offset,
+          end_x = mid_x + x_offset,
+          end_y = mid_y + y_offset;
+          
+      ctx.moveTo(start_x, start_y);
+      ctx.lineTo(end_x, end_y);
+    }
   }
+
   ctx.stroke();
 }
 
@@ -78,7 +109,7 @@ function del() {
   let list = document.getElementById('list'),
       lineNodes = list.children;
 
-  for (const i in lineNodes) {
+  for(const i in lineNodes) {
     if(lineNodes[i].selected === true && !isNaN(lineNodes[i].value)) {
       delete(lines[lineNodes[i].value]);
       list.removeChild(lineNodes[i]);
