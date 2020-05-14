@@ -10,9 +10,11 @@
   <body>
     <div class='grid'>
       <div>
-        <div>
+        <div class='form'>
           <label for='name'>Filename: </label>
           <input type='text' id='name' value='Untitled'/>
+          <label for='desc'>Description: </label>
+          <input type='text' id='desc' value='Custom pattern'/>
         </div>
         <select id='list' size='8' onchange='load_line()'>
           <option onclick='add()'>+ Create new line</option>
@@ -20,19 +22,19 @@
         <div><button onclick='del()'>Delete Line</button></div>
         <div class='form'>
           <label for='ang'>Angle:</label>
-          <input type='number' id='ang' value='0' step='.1' onkeyup='change_line()' onchange='change_line()'/>
+          <input type='number' id='ang' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
           <label for='x'>Origin X:</label>
-          <input type='number' id='x' value='0' step='.1' onkeyup='change_line()' onchange='change_line()'/>
+          <input type='number' id='x' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
           <label for='y'>Origin Y:</label>
-          <input type='number' id='y' value='0' step='.1' onkeyup='change_line()' onchange='change_line()'/>
+          <input type='number' id='y' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
           <label for='dx'>Delta X:</label>
-          <input type='number' id='dx' value='0' step='.1' onkeyup='change_line()' onchange='change_line()'/>
+          <input type='number' id='dx' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
           <label for='dy'>Delta Y:</label>
-          <input type='number' id='dy' value='0' step='.1' onkeyup='change_line()' onchange='change_line()'/>
+          <input type='number' id='dy' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
           <label for='dash1'>Dash 1:</label>
-          <input type='number' id='dash1' value='0' step='.1' onkeyup='change_line()' onchange='change_line()'/>
+          <input type='number' id='dash1' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
           <label for='dash2'>Dash 2:</label>
-          <input type='number' id='dash2' value='0' step='.1' onkeyup='change_line()' onchange='change_line()'/>
+          <input type='number' id='dash2' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
         </div>
       </div>
       <canvas></canvas>
@@ -42,8 +44,7 @@
       </div>
     </div>
     <footer>
-      <a href='.'>Homepage</a>
-       | This page is 2KB | 
+      <a href='.'>Homepage</a> | This page is 2KB | 
       <a href='https://github.com/AndreVallestero/hatch-pattern-generator'>GitHub</a>
     </footer>
 	  <script type='text/javascript' src='app.js'></script>

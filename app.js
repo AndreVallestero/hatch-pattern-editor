@@ -20,58 +20,49 @@ TODO:
 */
 'use strict';
 
-const TO_RAD = Math.PI / -180;
+const TO_RAD = Math.PI / -180,
+      SCALE = 4,
+      LENGTH = 4096;
 
 var lines = {},
-    loaded = -1,
-    length = -1;
+    loaded = -1;
 
 function main() {
-  resize();
   window.addEventListener('resize', resize);
   let canvas = document.getElementsByTagName('canvas')[0];
-  canvas.getContext('2d').translate(0.5, 0.5);
+  
+  resize();
 }
 
 function resize() {
   let canvas = document.getElementsByTagName('canvas')[0];
-  canvas.width  = canvas.offsetWidth;
-  canvas.height = window.innerHeight * 0.6;
-  length = canvas.width + canvas.height;
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+
   draw();
 }
 
 function draw() {
   let canvas = document.getElementsByTagName('canvas')[0],
-    ctx = canvas.getContext('2d');
+      ctx = canvas.getContext('2d');
   ctx.fillStyle = 'white';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
 
-  /*
-  draw first line from starting position to length
-  draw delta x until starting point out of screen
-  draw delta y until starting point out of screen
-
-  dashed line:
-  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash
-  */
-
-  const SCALE = 4;
   for(const key in lines) {
     let line = lines[key],
-        x_offset = Math.cos(line.ang * TO_RAD) * length,
-        y_offset = Math.sin(line.ang * TO_RAD) * length,
+        x_offset = Math.cos(line.ang * TO_RAD) * LENGTH,
+        y_offset = Math.sin(line.ang * TO_RAD) * LENGTH,
         x = parseFloat(line.x) * SCALE,
         y = parseFloat(line.y) * SCALE,
         dx = parseFloat(line.dx) * SCALE,
         dy = parseFloat(line.dy) * SCALE,
         dash1 = parseFloat(line.dash1) * SCALE,
         dash2 = parseFloat(line.dash2) * SCALE;
+        //dashed line: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash
 
-    if(dx < SCALE && dy < SCALE) break;
-
-    for(let j = 0; j < 256; ++j) {
+    if(dx == 0 && dy == 0) continue;
+    for(let j = -LENGTH / 2; j < LENGTH / 2; ++j) {
       let mid_x = x + dx * j,
           mid_y = y + dy * j,
           start_x = mid_x - x_offset,
@@ -83,17 +74,16 @@ function draw() {
       ctx.lineTo(end_x, end_y);
     }
   }
-
   ctx.stroke();
 }
 
 function add() {
   let list = document.getElementById('list'),
       option = document.createElement('option'),
-      lineNodes = list.children;
+      line_nodes = list.children;
   
-  for(var i = 0; i < lineNodes.length; ++i)
-    if(i != lineNodes[i].value) {
+  for(var i = 0; i < line_nodes.length; ++i)
+    if(i != line_nodes[i].value) {
       option.value = i;
       break;
     }
@@ -101,7 +91,7 @@ function add() {
   lines[i] = new Line();
 
   option.text = 'Line ' + (parseInt(option.value) + 1);
-  list.insertBefore(option, lineNodes[i]);
+  list.insertBefore(option, line_nodes[i]);
   option.selected = true;
 
   load_line();
@@ -110,12 +100,12 @@ function add() {
 
 function del() {
   let list = document.getElementById('list'),
-      lineNodes = list.children;
+      line_nodes = list.children;
 
-  for(const i in lineNodes) {
-    if(lineNodes[i].selected === true && !isNaN(lineNodes[i].value)) {
-      delete(lines[lineNodes[i].value]);
-      list.removeChild(lineNodes[i]);
+  for(const i in line_nodes) {
+    if(line_nodes[i].selected === true && !isNaN(line_nodes[i].value)) {
+      delete(lines[line_nodes[i].value]);
+      list.removeChild(line_nodes[i]);
       break;
     }
   }
@@ -125,10 +115,10 @@ function del() {
 }
 
 function load_line() {
-  let lineNodes = document.getElementsByTagName('option');
-  for (const i in lineNodes) {
-    if(lineNodes[i].selected === true && !isNaN(lineNodes[i].value)) {
-      loaded = lineNodes[i].value;
+  let line_nodes = document.getElementsByTagName('option');
+  for (const i in line_nodes) {
+    if(line_nodes[i].selected === true && !isNaN(line_nodes[i].value)) {
+      loaded = line_nodes[i].value;
       let line = lines[loaded];
       document.getElementById('ang').value = line.ang;
       document.getElementById('x').value = line.x;
@@ -151,11 +141,11 @@ function load_line() {
 }
 
 function change_line() {
-  let lineNodes = document.getElementsByTagName('option');
+  let line_nodes = document.getElementsByTagName('option');
 
-  for (const i in lineNodes) {
-    if(lineNodes[i].selected === true && lineNodes[i].value === loaded) {
-      let line = lines[lineNodes[i].value];
+  for (const i in line_nodes) {
+    if(line_nodes[i].selected === true && line_nodes[i].value === loaded) {
+      let line = lines[line_nodes[i].value];
       line.ang = document.getElementById('ang').value;
       line.x = document.getElementById('x').value;
       line.y = document.getElementById('y').value;
