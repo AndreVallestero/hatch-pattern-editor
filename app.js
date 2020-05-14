@@ -1,80 +1,82 @@
-/*
-+-----------------+-------------------+----------------+
-|	pattern name  |					  |		read only  |
-|-----------------|					  |	output text box|
-|list box of lines|					  |				   |
-|-----------------|canvas for preview |				   |
-|control panel for|					  |----------------|
-|selected line	  |					  |download pattern|
-+-----------------+-------------------+----------------+
-*/
-
-/* download button
-https://stackoverflow.com/questions/609530/download-textarea-contents-as-a-file-using-only-javascript-no-server-side/19332584#19332584
-https://stackoverflow.com/questions/609530/download-textarea-contents-as-a-file-using-only-javascript-no-server-side/17486753#17486753
-https://stackoverflow.com/questions/609530/download-textarea-contents-as-a-file-using-only-javascript-no-server-side/56153423#56153423
-
-TODO:
-  Add description field
-
-*/
 'use strict';
-
-const TO_RAD = Math.PI / -180,
-      SCALE = 4,
-      LENGTH = 4096;
 
 var lines = {},
     loaded = -1;
 
 function main() {
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', draw);
   let canvas = document.getElementsByTagName('canvas')[0];
   
-  resize();
-}
-
-function resize() {
-  let canvas = document.getElementsByTagName('canvas')[0];
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-
   draw();
 }
 
 function draw() {
+  const TO_RAD = Math.PI / -180,
+        LENGTH = 4096;
+
   let canvas = document.getElementsByTagName('canvas')[0],
-      ctx = canvas.getContext('2d');
+      ctx = canvas.getContext('2d'),
+      scale = parseFloat(document.getElementById('scale').value);
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
   ctx.fillStyle = 'white';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
 
   for(const key in lines) {
     let line = lines[key],
-        x_offset = Math.cos(line.ang * TO_RAD) * LENGTH,
-        y_offset = Math.sin(line.ang * TO_RAD) * LENGTH,
-        x = parseFloat(line.x) * SCALE,
-        y = parseFloat(line.y) * SCALE,
-        dx = parseFloat(line.dx) * SCALE,
-        dy = parseFloat(line.dy) * SCALE,
-        dash1 = parseFloat(line.dash1) * SCALE,
-        dash2 = parseFloat(line.dash2) * SCALE;
-        //dashed line: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash
-
+        cos = Math.cos(line.ang * TO_RAD),
+        sin = Math.sin(line.ang * TO_RAD),
+        x_offset = cos * LENGTH,
+        y_offset = sin * LENGTH,
+        x = (line.dx * cos + line.dy * sin) * scale,
+        y = (line.dx * sin + line.dy * cos) * scale,
+        dx = (line.dx * cos + line.dy * sin) * scale,
+        dy = (line.dx * sin + line.dy * cos) * scale;
+    
     if(dx == 0 && dy == 0) continue;
-    for(let j = -LENGTH / 2; j < LENGTH / 2; ++j) {
-      let mid_x = x + dx * j,
-          mid_y = y + dy * j,
-          start_x = mid_x - x_offset,
-          start_y = mid_y - y_offset,
+    
+    ctx.beginPath();
+    ctx.setLineDash(gen_cdashes(line.dashes, scale));
+    for(let i = LENGTH / -2; i < LENGTH / 2; ++i) {
+      let mid_x = x + dx * i,
+          mid_y = y + dy * i,
           end_x = mid_x + x_offset,
           end_y = mid_y + y_offset;
-          
-      ctx.moveTo(start_x, start_y);
+      ctx.moveTo(mid_x, mid_y);
       ctx.lineTo(end_x, end_y);
     }
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.setLineDash(gen_cdashes(line.dashes.reverse(), scale));
+    for(let i = LENGTH / -2; i < LENGTH / 2; ++i) {
+      let mid_x = x + dx * i,
+          mid_y = y + dy * i,
+          end_x = mid_x - x_offset,
+          end_y = mid_y - y_offset;
+      ctx.moveTo(mid_x, mid_y);
+      ctx.lineTo(end_x, end_y);
+    }
+    ctx.stroke();
   }
-  ctx.stroke();
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash
+function gen_cdashes(dashes, scale) {
+  let cdashes = [];
+  for(let i = 0; i < dashes.length; ++i) {
+    if(dashes[i] == 0)
+      continue;
+    else if((dashes[i] < 0 && cdashes.length%2 == 0) || (dashes[i] > 0 && cdashes.length%2 == 1))
+      cdashes.push(0);
+
+    if (dashes[i] > 0)
+      cdashes.push(dashes[i] * scale);
+    else
+      cdashes.push(dashes[i] * -scale);
+  }
+  if(cdashes.length%2 == 1) cdashes.push(0);
+  return cdashes;
 }
 
 function add() {
@@ -102,10 +104,10 @@ function del() {
   let list = document.getElementById('list'),
       line_nodes = list.children;
 
-  for(const i in line_nodes) {
-    if(line_nodes[i].selected === true && !isNaN(line_nodes[i].value)) {
-      delete(lines[line_nodes[i].value]);
-      list.removeChild(line_nodes[i]);
+  for(const line_node of line_nodes) {
+    if(line_node.selected === true && !isNaN(line_node.value)) {
+      delete(lines[line_node.value]);
+      list.removeChild(line_node);
       break;
     }
   }
@@ -115,18 +117,17 @@ function del() {
 }
 
 function load_line() {
-  let line_nodes = document.getElementsByTagName('option');
-  for (const i in line_nodes) {
-    if(line_nodes[i].selected === true && !isNaN(line_nodes[i].value)) {
-      loaded = line_nodes[i].value;
+  for (const line_node of document.getElementsByTagName('option')) {
+    if(line_node.selected === true && !isNaN(line_node.value)) {
+      loaded = line_node.value;
       let line = lines[loaded];
       document.getElementById('ang').value = line.ang;
       document.getElementById('x').value = line.x;
       document.getElementById('y').value = line.y;
       document.getElementById('dx').value = line.dx;
       document.getElementById('dy').value = line.dy;
-      document.getElementById('dash1').value = line.dash1;
-      document.getElementById('dash2').value = line.dash2;
+      for(let j = 1; j < 7; ++j)
+        document.getElementById('dash'+j).value = line.dashes[j-1];
       return
     }
   }
@@ -136,23 +137,23 @@ function load_line() {
   document.getElementById('y').value = 0;
   document.getElementById('dx').value = 0;
   document.getElementById('dy').value = 0;
-  document.getElementById('dash1').value = 0;
-  document.getElementById('dash2').value = 0;
+  for(let i = 1; i < 7; ++i)
+    document.getElementById('dash'+i).value = 0;
 }
 
 function change_line() {
   let line_nodes = document.getElementsByTagName('option');
 
-  for (const i in line_nodes) {
-    if(line_nodes[i].selected === true && line_nodes[i].value === loaded) {
-      let line = lines[line_nodes[i].value];
-      line.ang = document.getElementById('ang').value;
-      line.x = document.getElementById('x').value;
-      line.y = document.getElementById('y').value;
-      line.dx = document.getElementById('dx').value;
-      line.dy = document.getElementById('dy').value;
-      line.dash1 = document.getElementById('dash1').value;
-      line.dash2 = document.getElementById('dash2').value;
+  for (const line_node of line_nodes) {
+    if(line_node.selected === true && line_node.value === loaded) {
+      let line = lines[line_node.value];
+      line.ang = parseFloat(document.getElementById('ang').value);
+      line.x = parseFloat(document.getElementById('x').value);
+      line.y = parseFloat(document.getElementById('y').value);
+      line.dx = parseFloat(document.getElementById('dx').value);
+      line.dy = parseFloat(document.getElementById('dy').value);
+      for(let j = 1; j < 7; ++j)
+        line.dashes[j-1] = parseFloat(document.getElementById('dash'+j).value);
       break;
     }
   }
@@ -161,7 +162,7 @@ function change_line() {
 }
 
 function update() {
-  draw()
+  draw();
 }
 
 function download() {
@@ -185,8 +186,7 @@ class Line {
     this.y = 0;
     this.dx = 0;
     this.dy = 0;
-    this.dash1 = 0;
-    this.dash2 = 0;
+    this.dashes = new Array(6).fill(0);
   }
 }
 

@@ -16,7 +16,7 @@
           <label for='desc'>Description: </label>
           <input type='text' id='desc' value='Custom pattern'/>
         </div>
-        <select id='list' size='8' onchange='load_line()'>
+        <select id='list' size='5' onchange='load_line()'>
           <option onclick='add()'>+ Create new line</option>
         </select>
         <div><button onclick='del()'>Delete Line</button></div>
@@ -35,12 +35,22 @@
           <input type='number' id='dash1' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
           <label for='dash2'>Dash 2:</label>
           <input type='number' id='dash2' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
+          <label for='dash3'>Dash 3:</label>
+          <input type='number' id='dash3' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
+          <label for='dash4'>Dash 4:</label>
+          <input type='number' id='dash4' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
+          <label for='dash5'>Dash 5:</label>
+          <input type='number' id='dash5' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
+          <label for='dash6'>Dash 6:</label>
+          <input type='number' id='dash6' value='0' step='.5' onkeyup='change_line()' onchange='change_line()'/>
+          <label for='scale'>Preview Scale:</label>
+          <input type='range' id='scale' min='0.5' max='10' value='4' step='0.5' onchange='change_line()'/>
         </div>
       </div>
       <canvas></canvas>
       <div>
         <textarea readonly wrap='off'></textarea>
-        <div><button onclick='download()'>Download</button></div>
+        <div><button onclick='download()'>Download / Export</button></div>
       </div>
     </div>
     <footer>

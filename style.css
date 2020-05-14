@@ -38,10 +38,10 @@ textarea {
 
 footer {
   position: fixed;
-  bottom: 4px;
-  text-align: center
+  bottom: 8px;
+  text-align: center;
 }
 
-a {
-  color: #dbdbb2;
+footer, a {
+  color: #808080;
 }
