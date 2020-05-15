@@ -203,8 +203,10 @@ function imp() {
   let inlines = stdin.match(/[^\r\n]+/g),
       i = 0;
 
-  for(const line of inlines) {
-    if(line.startsWith('*')) {
+  for(let line of inlines) {
+    line = line.trim();
+    if(line.startsWith(';')) continue;
+    else if(line.startsWith('*')) {
       let parts = line.substr(1).split(/,(.+)/);
       document.getElementById('name').value = parts[0].trim();
       document.getElementById('desc').value = parts[1].trim();
