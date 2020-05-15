@@ -29,7 +29,7 @@ input {
   width: 98%
 }
 
-#list,button,canvas,footer {
+#list,button,canvas {
   width: 100%
 }
 
@@ -46,8 +46,7 @@ textarea {
 footer {
   position: fixed;
   bottom: 3px;
-  pointer-events: none;
-  text-align: center
+  left: 45%
 }
 
 footer, a {
