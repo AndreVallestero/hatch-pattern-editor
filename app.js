@@ -17,8 +17,8 @@ function resize() {
 
 function draw() {
   const TO_RAD = Math.PI / -180,
-        LENGTH = 2048,
-        ROWS = Math.round(LENGTH / 8);
+        LENGTH = 4096,
+        ROWS = Math.round(LENGTH / 16);
 
   let canvas = document.getElementsByTagName('canvas')[0],
       ctx = canvas.getContext('2d'),
