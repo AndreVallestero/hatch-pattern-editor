@@ -209,7 +209,8 @@ function imp() {
     else if(line.startsWith('*')) {
       let parts = line.substr(1).split(/,(.+)/);
       document.getElementById('name').value = parts[0].trim();
-      document.getElementById('desc').value = parts[1].trim();
+      if(parts.length > 1)
+        document.getElementById('desc').value = parts[1].trim();
     } else {
       let parts = line.split(','),
           option = document.createElement('option'),
