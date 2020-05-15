@@ -4,9 +4,6 @@ var lines = {},
     loaded = -1;
 
 function main() {
-  window.addEventListener('resize', draw);
-  let canvas = document.getElementsByTagName('canvas')[0];
-  
   //*AR-BRELM, Standard brick elevation english bond with mortar joints
   lines[0] = new Line(0,0,0,0,5.334,[7.625,-.375,0,0,0,0]);
   lines[1] = new Line(0,0,2.25, 0,5.334,[7.625,-.375,0,0,0,0]);
@@ -16,6 +13,15 @@ function main() {
   lines[5] = new Line(90,-0.375,0,0,8,[2.25,-3.084,0,0,0,0]);
   lines[6] = new Line(90,2,2.667,0,4,[2.25,-3.084,0,0,0,0]);
   lines[7] = new Line(90,1.625,2.667,0,4,[2.25,-3.084,0,0,0,0]);
+  
+  resize();
+  window.addEventListener('resize', resize);
+}
+
+function resize() {
+  let canvas = document.getElementsByTagName('canvas')[0];
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
   draw();
 }
 
@@ -27,8 +33,6 @@ function draw() {
   let canvas = document.getElementsByTagName('canvas')[0],
       ctx = canvas.getContext('2d'),
       scale = parseFloat(document.getElementById('scale').value);
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
   ctx.fillStyle = 'white';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 

@@ -1,5 +1,10 @@
+html, body, .grid, canvas, textarea {
+  height: 100%
+}
+
 html, body {
-  height: 95%;
+  margin: 0;
+  overflow: hidden;
   background-color: #282828;
   color: #dbdbb2;
   font-family: sans-serif
@@ -7,12 +12,17 @@ html, body {
 
 .grid {
   display: grid;
-  grid-template-columns: auto auto auto
+  grid-template-columns: auto 1fr auto
 }
 
 .form {
   display: grid;
   grid-template-columns: auto auto
+}
+
+.sform {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 input {
@@ -27,13 +37,8 @@ input {
   text-align: right
 }
 
-.grid, canvas {
-  height: 100%
-}
-
 textarea {
   resize: none;
-  height: 92%
 }
 
 footer {
@@ -43,5 +48,5 @@ footer {
 }
 
 footer, a {
-  color: #808080;
+  color: black;
 }

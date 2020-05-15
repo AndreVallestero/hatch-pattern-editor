@@ -16,7 +16,7 @@
           <label for='desc'>Description: </label>
           <input type='text' id='desc' value='Custom pattern'/>
         </div>
-        <select id='list' size='5' onchange='load_line()'>
+        <select id='list' size='6' onchange='load_line()'>
           <option onclick='add()'>+ Create new line</option>
         </select>
         <div><button onclick='del()'>Delete Line</button></div>
@@ -48,7 +48,7 @@
         </div>
       </div>
       <canvas></canvas>
-      <div>
+      <div class='sform'>
         <div><button onclick='import()'>Import</button></div>
         <textarea readonly wrap='off'></textarea>
         <div><button onclick='download()'>Download / Export</button></div>
