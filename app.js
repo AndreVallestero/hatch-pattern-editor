@@ -29,8 +29,8 @@ function draw() {
         sin = Math.sin(line.ang * TO_RAD),
         x_offset = cos * LENGTH,
         y_offset = sin * LENGTH,
-        x = (line.x*cos + line.y*sin) * scale,
-        y = (line.x*sin + line.y*cos) * scale,
+        x = line.x * scale,
+        y = line.y * scale,
         dx = (line.dx*cos + line.dy*sin) * scale,
         dy = (line.dx*sin + line.dy*cos) * -scale;
       
