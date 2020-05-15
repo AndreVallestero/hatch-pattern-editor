@@ -1,4 +1,4 @@
-# Hash patterns with multiple lines examples
+# Hatch patterns with multiple lines examples
 Complex hatch patterns can contain multiple definition lines and can have an origin that passes through offsets from the origin.
 
 Not all hatch patterns use origin points of 0,0. In composing more complex patterns, you need to carefully specify the following of each line family to form the hatch pattern correctly:
@@ -69,9 +69,9 @@ This pattern would be defined as follows:
 ## Documentation
 
 - [Homepage](../README.md)
-- [About hash patterns](about.md)
-- [About hash patterns with dashed lines](dashed-lines-about.md)
-- [Hash patterns with dashed lines examples](dashed-lines-examples.md)
-- [About hash patterns with multiple lines](multiple-lines-about.md)
-- [Hash patterns with multiple lines examples](multiple-lines-examples.md)
+- [About hatch patterns](about.md)
+- [About hatch patterns with dashed lines](dashed-lines-about.md)
+- [Hatch patterns with dashed lines examples](dashed-lines-examples.md)
+- [About hatch patterns with multiple lines](multiple-lines-about.md)
+- [Hatch patterns with multiple lines examples](multiple-lines-examples.md)
 - [Source](https://help.autodesk.com/cloudhelp/2019/ENU/AutoCAD-LT/files/GUID-79B99823-7600-4CAB-BD12-04D5103D90CB.htm)

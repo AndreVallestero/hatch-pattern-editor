@@ -1,4 +1,4 @@
-# Hash patterns with dashed lines examples
+# Hatch patterns with dashed lines examples
 Hatch patterns can contain dashed-lines by adding dash-lengths to a hatch pattern definition line.
 
 Each dash-length specifies the length of a segment making up a line. If a length is positive, a pen-down segment is drawn. If a length is negative, the segment is pen-up and it is not drawn resulting in the creation of a space, also known as a *gap*. The pattern starts at the origin point with the first segment and cycles through the segments in circular fashion. A dash length of 0 draws a dot. You can specify up to six dash-lengths per definition line.
@@ -54,9 +54,9 @@ The hatch pattern definition is similar, except the `delta-x` specification is s
 ## Documentation
 
 - [Homepage](../README.md)
-- [About hash patterns](about.md)
-- [About hash patterns with dashed lines](dashed-lines-about.md)
-- [Hash patterns with dashed lines examples](dashed-lines-examples.md)
-- [About hash patterns with multiple lines](multiple-lines-about.md)
-- [Hash patterns with multiple lines examples](multiple-lines-examples.md)
+- [About hatch patterns](about.md)
+- [About hatch patterns with dashed lines](dashed-lines-about.md)
+- [Hatch patterns with dashed lines examples](dashed-lines-examples.md)
+- [About hatch patterns with multiple lines](multiple-lines-about.md)
+- [Hatch patterns with multiple lines examples](multiple-lines-examples.md)
 - [Source](https://help.autodesk.com/cloudhelp/2019/ENU/AutoCAD-LT/files/GUID-B67FADB9-0F10-4536-ABC4-BB7D8BDDF5B1.htm)
