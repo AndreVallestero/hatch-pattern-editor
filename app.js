@@ -4,16 +4,6 @@ var lines = {},
     loaded = -1;
 
 function main() {
-  //*AR-BRELM, Standard brick elevation english bond with mortar joints
-  lines[0] = new Line(0,0,0,0,5.334,[7.625,-.375,0,0,0,0]);
-  lines[1] = new Line(0,0,2.25, 0,5.334,[7.625,-.375,0,0,0,0]);
-  lines[2] = new Line(0,2,2.667,0,5.334,[3.625,-.375,0,0,0,0]);
-  lines[3] = new Line(0,2,4.917,0,5.334,[3.625,-.375,0,0,0,0]);
-  lines[4] = new Line(90,0,0,0,8,[2.25,-3.084,0,0,0,0]);
-  lines[5] = new Line(90,-0.375,0,0,8,[2.25,-3.084,0,0,0,0]);
-  lines[6] = new Line(90,2,2.667,0,4,[2.25,-3.084,0,0,0,0]);
-  lines[7] = new Line(90,1.625,2.667,0,4,[2.25,-3.084,0,0,0,0]);
-  
   resize();
   window.addEventListener('resize', resize);
 }
@@ -119,7 +109,7 @@ function del() {
       line_nodes = list.children;
 
   for(const line_node of line_nodes) {
-    if(line_node.selected === true && !isNaN(line_node.value)) {
+    if(line_node.selected === true && line_node.id != 'last') {
       delete(lines[line_node.value]);
       list.removeChild(line_node);
       break;
@@ -132,7 +122,7 @@ function del() {
 
 function load_line() {
   for (const line_node of document.getElementsByTagName('option')) {
-    if(line_node.selected === true && !isNaN(line_node.value)) {
+    if(line_node.selected === true && line_node.id != 'last') {
       loaded = line_node.value;
       let line = lines[loaded];
       document.getElementById('ang').value = line.ang;
@@ -177,9 +167,77 @@ function change_line() {
 
 function update() {
   draw();
+  generate();
 }
 
-function download() {
+function generate() {
+  let name = document.getElementById('name').value,
+      desc = document.getElementById('desc').value,
+      stdout = document.getElementsByTagName('textarea')[0];
+  
+  stdout.value = '*' + name.trim().replace(/\s+/g, '-').toUpperCase() + ', ';
+  stdout.value += desc.trim();
+
+  for(const key in lines) {
+    let line = lines[key];
+    if(line.dx == 0 && line.dy == 0) continue;
+    stdout.value += '\n';
+    stdout.value += line.ang +','+ line.x +','+ line.y +','+ line.dx +','+line.dy;
+    for(const dash of line.dashes) {
+      if(dash == 0) break;
+      stdout.value += ',' + dash;
+    }
+  }
+}
+
+function imp() {
+  let list = document.getElementById('list'),
+      last = document.getElementById('last'),
+      stdin = document.getElementsByTagName('textarea')[0].value,
+      line_nodes = list.children;
+
+  while(line_nodes.length > 1)
+    for(const line_node of line_nodes)
+      if(line_node.id != 'last')
+        list.removeChild(line_node);
+
+  lines = {};
+
+  stdin.replace(/^\s*$(?:\r\n?|\n)/gm, ''); // Remove new lines
+  let inlines = stdin.match(/[^\r\n]+/g),
+      i = 0;
+
+  for(const line of inlines) {
+    if(line.startsWith('*')) {
+      let parts = line.substr(1).split(/,(.+)/);
+      document.getElementById('name').value = parts[0].trim();
+      document.getElementById('desc').value = parts[1].trim();
+    } else {
+      let parts = line.split(','),
+          option = document.createElement('option'),
+          new_line = new Line(
+            parseFloat(parts[0]),
+            parseFloat(parts[1]),
+            parseFloat(parts[2]),
+            parseFloat(parts[3]),
+            parseFloat(parts[4])
+          );
+
+      parts.splice(5).forEach((part, j) => {
+        new_line.dashes[j] = parseFloat(part)
+      })
+      lines[i] = new_line;
+      
+      option.value = i;
+      option.text = 'Line ' + (i++ + 1);
+      list.insertBefore(option, last);
+    }
+  };
+
+  draw();
+}
+
+function exp() {
   let name = document.getElementById('name').value,
       str = document.getElementsByTagName('textarea')[0].value,
       link = document.createElement('a');

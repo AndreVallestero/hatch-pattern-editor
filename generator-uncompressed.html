@@ -11,13 +11,13 @@
     <div class='grid'>
       <div>
         <div class='form'>
-          <label for='name'>Filename: </label>
-          <input type='text' id='name' value='Untitled'/>
+          <label for='name'>Name: </label>
+          <input type='text' id='name' value='Untitled' onkeyup='generate()' onchange='generate()'/>
           <label for='desc'>Description: </label>
-          <input type='text' id='desc' value='Custom pattern'/>
+          <input type='text' id='desc' value='Custom pattern' onkeyup='generate()' onchange='generate()'/>
         </div>
-        <select id='list' size='6' onchange='load_line()'>
-          <option onclick='add()'>+ Create new line</option>
+        <select id='list' size='7' onchange='load_line()'>
+          <option id ='last' onclick='add()'>+ Create new line</option>
         </select>
         <div><button onclick='del()'>Delete Line</button></div>
         <div class='form'>
@@ -49,9 +49,9 @@
       </div>
       <canvas></canvas>
       <div class='sform'>
-        <div><button onclick='import()'>Import</button></div>
-        <textarea readonly wrap='off'></textarea>
-        <div><button onclick='download()'>Download / Export</button></div>
+        <div><button onclick='imp()'>Import</button></div>
+        <textarea wrap='off'></textarea>
+        <div><button onclick='exp()'>Download / Export</button></div>
       </div>
     </div>
     <footer>
