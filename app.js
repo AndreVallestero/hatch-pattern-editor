@@ -195,8 +195,8 @@ function imp() {
       last = document.getElementById('last'),
       stdin = document.getElementsByTagName('textarea')[0].value;
 
-  while(list.lastChild.id !== 'last')
-    list.removeChild(list.lastChild);
+  while(list.firstChild.id !== 'last')
+    list.removeChild(list.firstChild);
   lines = {};
 
   stdin.replace(/^\s*$(?:\r\n?|\n)/gm, ''); // Remove new lines
