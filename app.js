@@ -7,6 +7,15 @@ function main() {
   window.addEventListener('resize', draw);
   let canvas = document.getElementsByTagName('canvas')[0];
   
+  //*AR-BRELM, Standard brick elevation english bond with mortar joints
+  lines[0] = new Line(0,0,0,0,5.334,[7.625,-.375,0,0,0,0]);
+  lines[1] = new Line(0,0,2.25, 0,5.334,[7.625,-.375,0,0,0,0]);
+  lines[2] = new Line(0,2,2.667,0,5.334,[3.625,-.375,0,0,0,0]);
+  lines[3] = new Line(0,2,4.917,0,5.334,[3.625,-.375,0,0,0,0]);
+  lines[4] = new Line(90,0,0,0,8,[2.25,-3.084,0,0,0,0]);
+  lines[5] = new Line(90,-0.375,0,0,8,[2.25,-3.084,0,0,0,0]);
+  lines[6] = new Line(90,2,2.667,0,4,[2.25,-3.084,0,0,0,0]);
+  lines[7] = new Line(90,1.625,2.667,0,4,[2.25,-3.084,0,0,0,0]);
   draw();
 }
 
@@ -30,7 +39,7 @@ function draw() {
         x_offset = cos * LENGTH,
         y_offset = sin * LENGTH,
         x = line.x * scale,
-        y = line.y * scale,
+        y = line.y * -scale,
         dx = (line.dx*cos + line.dy*sin) * scale,
         dy = (line.dx*sin + line.dy*cos) * -scale;
       
@@ -181,13 +190,13 @@ function download() {
 }
 
 class Line {
-  constructor() {
-    this.ang = 0;
-    this.x = 0;
-    this.y = 0;
-    this.dx = 0;
-    this.dy = 0;
-    this.dashes = new Array(6).fill(0);
+  constructor(ang=0, x=0, y=0, dx=0, dy=0, dashes=(new Array(6).fill(0))) {
+    this.ang = ang;
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.dashes = dashes;
   }
 }
 
