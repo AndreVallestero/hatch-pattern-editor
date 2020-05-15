@@ -1,7 +1,7 @@
-# hatch-pattern-generator
-Hatch pattern generator for drafting and design software like CAD, Photoshop, and Illustrator
+# hatch-pattern-editor
+Hatch pattern editor for drafting and design software like CAD, Photoshop, and Illustrator
 
-[Click HERE to use Hatch Pattern Generator](generator.html)
+[Click HERE to use Hatch Pattern Editor](editor.html)
 
 ## Documentation
 

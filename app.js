@@ -193,14 +193,10 @@ function generate() {
 function imp() {
   let list = document.getElementById('list'),
       last = document.getElementById('last'),
-      stdin = document.getElementsByTagName('textarea')[0].value,
-      line_nodes = list.children;
+      stdin = document.getElementsByTagName('textarea')[0].value;
 
-  while(line_nodes.length > 1)
-    for(const line_node of line_nodes)
-      if(line_node.id != 'last')
-        list.removeChild(line_node);
-
+  while(list.lastChild.id !== 'last')
+    list.removeChild(list.lastChild);
   lines = {};
 
   stdin.replace(/^\s*$(?:\r\n?|\n)/gm, ''); // Remove new lines

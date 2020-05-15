@@ -69,7 +69,6 @@ This pattern would be defined as follows:
 ## Documentation
 
 - [Homepage](../README.md)
-- [Generator](../generator.html)
 - [About hash patterns](about.md)
 - [About hash patterns with dashed lines](dashed-lines-about.md)
 - [Hash patterns with dashed lines examples](dashed-lines-examples.md)
