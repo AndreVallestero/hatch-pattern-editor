@@ -12,7 +12,8 @@ function main() {
 
 function draw() {
   const TO_RAD = Math.PI / -180,
-        LENGTH = 4096;
+        LENGTH = 2048,
+        ROWS = Math.round(LENGTH / 8);
 
   let canvas = document.getElementsByTagName('canvas')[0],
       ctx = canvas.getContext('2d'),
@@ -28,16 +29,16 @@ function draw() {
         sin = Math.sin(line.ang * TO_RAD),
         x_offset = cos * LENGTH,
         y_offset = sin * LENGTH,
-        x = (line.dx * cos + line.dy * sin) * scale,
-        y = (line.dx * sin + line.dy * cos) * scale,
-        dx = (line.dx * cos + line.dy * sin) * scale,
-        dy = (line.dx * sin + line.dy * cos) * scale;
-    
+        x = line.x * sin * scale,
+        y = line.y * cos * scale,
+        dx = (line.dx*cos + line.dy*sin) * scale,
+        dy = (line.dx*sin + line.dy*cos) * -scale;
+      
     if(dx == 0 && dy == 0) continue;
     
     ctx.beginPath();
     ctx.setLineDash(gen_cdashes(line.dashes, scale));
-    for(let i = LENGTH / -2; i < LENGTH / 2; ++i) {
+    for(let i = -ROWS; i < ROWS; ++i) {
       let mid_x = x + dx * i,
           mid_y = y + dy * i,
           end_x = mid_x + x_offset,
@@ -48,8 +49,8 @@ function draw() {
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.setLineDash(gen_cdashes(line.dashes.reverse(), scale));
-    for(let i = LENGTH / -2; i < LENGTH / 2; ++i) {
+    ctx.setLineDash(gen_cdashes(line.dashes.slice().reverse(), scale));
+    for(let i = -ROWS; i < ROWS; ++i) {
       let mid_x = x + dx * i,
           mid_y = y + dy * i,
           end_x = mid_x - x_offset,
